@@ -79,7 +79,7 @@ function bindKana(nameId,kanaId){
  });
 }
 bindKana('fn','fk');bindKana('pn','pk');bindKana('mn','mk');
-['foodListSearch','prepListSearch'].forEach(k=>el(k).addEventListener('input',()=>filterMasterList(k==='foodListSearch'?'food':'prep')));function exportData(){let b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='原価管理スマホ試作データ.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}render();
+['foodListSearch','prepListSearch'].forEach(k=>el(k).addEventListener('input',()=>filterMasterList(k==='foodListSearch'?'food':'prep')));function exportData(){let b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='利益管理_無料版_'+new Date().toLocaleDateString('sv-SE')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}render();
 [['food','fn'],['prep','pn'],['menu','mn']].forEach(([key,field])=>{el(field).addEventListener('focus',()=>{if(pendingNew[key]){el(field).value='';el(({food:'fk',prep:'pk',menu:'mk'})[key]).value='';pendingNew[key]=false}})});
 
 async function importData(event){
@@ -94,7 +94,7 @@ async function importData(event){
   const goodId=x=>typeof x==='string'&&x.length>0&&x.length<150;
   const goodName=x=>typeof x==='string'&&x.trim().length>0&&x.length<500;
   const goodNum=x=>typeof x==='number'&&Number.isFinite(x);
-  const validUnit=u=>['g','kg','ml','L','個','本','枚','袋','パック','缶'].includes(u);
+  const validUnit=u=>['g','kg','ml','L','個','本','枚','袋','箱','パック','缶'].includes(u);
   for(let k of ['foods','preps','menus','recipes']){
    if(parsed[k].length>30000||!unique(parsed[k]))throw Error('重複IDまたは件数の多すぎるデータがあります。');
    if(!parsed[k].every(x=>x&&typeof x==='object'&&goodId(x.id)))throw Error('IDが正しくありません。');
